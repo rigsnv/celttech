@@ -4,16 +4,18 @@ applications:
       phases:
         preBuild:
           commands:
-            - cd staticwebsite
+            - pwd
+            - ls -la
+            - cd /codebuild/output/src*/src/celttech/staticwebsite
             - npm ci
         build:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: staticwebsite/dist
+        baseDirectory: /codebuild/output/src*/src/celttech/staticwebsite/dist
         files:
           - '**/*'
       cache:
         paths:
-          - staticwebsite/node_modules/**/*
-    appRoot: staticwebsite
+          - /codebuild/output/src*/src/celttech/staticwebsite/node_modules/**/*
+    appRoot: /codebuild/output/src*/src/celttech/staticwebsite
