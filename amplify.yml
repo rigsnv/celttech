@@ -1,21 +1,20 @@
 version: 1
-applications:
-  - frontend:
-      phases:
-        preBuild:
-          commands:
-            - pwd
-            - ls -la
-            - cd /codebuild/output/src*/src/celttech/staticwebsite
-            - npm ci
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: /codebuild/output/src*/src/celttech/staticwebsite/dist
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - /codebuild/output/src*/src/celttech/staticwebsite/node_modules/**/*
-    appRoot: /codebuild/output/src*/src/celttech/staticwebsite
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - pwd
+        - ls -la
+        - mv staticwebsite/* staticwebsite/.* ./ 2>/dev/null || true
+        - rm -rf staticwebsite
+        - npm ci
+    build:
+      commands:
+        - npm run build
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
